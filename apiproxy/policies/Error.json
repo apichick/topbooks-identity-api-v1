@@ -1,0 +1,53 @@
+[{
+    "name": "AssignMessage.Error.InvalidRequest",
+    "message": "Invalid Request",
+    "status": "400",
+    "sequenceNumber": "001",
+    "error": "invalid_request"
+}, 
+{
+    "name": "AssignMessage.Error.UnsupportedGrantType",
+    "message": "Unsupported Grant Type",
+    "status": "400",
+    "sequenceNumber": "002",
+    "error": "unsupported_grant_type"
+},
+{
+    "name": "AssignMessage.Error.Unauthorized",
+    "message": "Unauthorized",
+    "status": "401",
+    "sequenceNumber": "001",
+    "error": "unauthorized"
+},
+{
+    "name": "AssignMessage.Error.Forbidden",
+    "message": "Unauthorized",
+    "status": "401",
+    "sequenceNumber": "001",
+    "error": "unauthorized"
+},  
+{
+    "name": "AssignMessage.Error.NotFound",
+    "message": "Not Found",
+    "status": "404",
+    "sequenceNumber": "001",
+    "error": "not_found"
+}, {
+    "name": "AssignMessage.Error.SpikeArrestViolation",
+    "message": "Too Many Requests",
+    "status": "429",
+    "sequenceNumber": "001",
+    "error": "spike_arrest_violation"
+}, {
+    "name": "AssignMessage.Error.QuotaViolation",
+    "message": "Quota Violation",
+    "status": "429",
+    "sequenceNumber": "002",
+    "error": "quota_violation"
+}, {
+    "name": "AssignMessage.Error.ProxyInternalServerError",
+    "message": "Internal Server Error",
+    "status": "500",
+    "sequenceNumber": "001",
+    "error": "proxy_internal_server_error"
+}]

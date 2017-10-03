@@ -1,0 +1,15 @@
+{
+    "default": {
+		"scheme": "https",
+		"domain": "${org}-${env}.apigee.net/identity/v1${deploymentSuffix}",
+		"apiProxyId": "01"	
+	},
+	"<org>": {
+		"<env>": {
+			"clientId": "<clientId>",
+			"clientSecret": "<clientSecret>",
+			"monitoringClientId": "<clientId>",
+			"monitoringClientSecret": "<clientSecret>"
+		}
+	}
+}

@@ -1,0 +1,165 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Identity API v1",
+        "version": "1",
+        "title": "Identity API v1"
+    },
+    "host": "localhost",
+    "basePath": "/identity/v1",
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/token": {
+            "post": {
+                "operationId": "generateAccessToken",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "security": [{
+                    "basicAuth": []
+                }],
+                "parameters": [{
+                    "name": "grant_type",
+                    "in": "formData",
+                    "type": "string",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/TokenResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid Client",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "operationId": "ping",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/PingResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid Client",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "type": "object",
+            "required": [
+                "code",
+                "error",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "pattern": "[0-9]{3}\\.[0-9]{2}\\.[0-9]{3}"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "TokenResponse": {
+            "type": "object",
+            "required": [
+                "token_type",
+                "expires_in",
+                "access_token",
+                "issued_at"                
+            ],
+            "properties": {
+                "token_type": {
+                    "type": "string",
+                    "enum": [
+                        "bearer"
+                    ]
+                },
+                "expires_in": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "issued_at": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "access_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "PingResponse": {
+            "type": "object",
+            "required": [
+                "environment",
+                "api",
+                "latency",
+                "receivedTimestamp",
+                "message"
+            ],
+            "properties": {
+                "environment": {
+                    "type": "string"
+                },
+                "api": {
+                    "type": "string",
+                    "pattern": "identity-api-v1(.*)"
+                },
+                "latency": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "receivedTimestamp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "message": {
+                    "type": "string",
+                    "enum": [
+                        "pong"
+                    ]
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic"
+        }
+    }
+}

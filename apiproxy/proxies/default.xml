@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <FaultRules>
+    	<%- include(partialsDir + '/FaultRules') %>
+    </FaultRules>
+    <%- include(partialsDir + '/ProxyDefaultFaultRule') %>
+    <PreFlow>
+        <Request>
+            <Step>
+                <Name>KeyValueMapOperations.ReadConfig</Name>
+            </Step>
+            <Step>
+                <Name>SpikeArrest</Name>
+                <Condition>environment.name = "prod" OR x-reset-spike-arrest-count = true</Condition>
+            </Step>
+        </Request>
+    </PreFlow>
+    <Flows>
+        <Flow name="Get Access Token (Client Credentials)">
+            <Request>
+                <Step>
+                    <Name>OAuthV2.GenerateAccessToken</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Javascript.AccessTokenResponse</Name>
+                </Step>
+            </Response>
+            <Condition>request.verb = "POST" AND proxy.pathsuffix MatchesPath "/token"</Condition>
+        </Flow>
+        <%- include(partialsDir + '/Ping') %>
+        <%- include(partialsDir + '/NotFound') %>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>/identity/v1</BasePath>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <RouteRule name="any"/>
+</ProxyEndpoint>
